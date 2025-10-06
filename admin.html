@@ -27,44 +27,81 @@
     <h2 class="stencil" style="font-size:32px; margin:0 0 10px;">Admin Dashboard</h2>
     <p class="hint" style="margin-top:0">Scrape listings or add manually. Export/Import to back up.</p>
 
-    <!-- SCRAPER SECTION -->
+    <!-- SCRAPER TOOLS SECTION -->
     <section class="scraper-section" style="margin-top:20px; border:1px solid var(--stroke); border-radius:12px; padding:16px; background:linear-gradient(180deg,var(--card),var(--card-2)); box-shadow: var(--shadow)">
-      <h3 class="stencil" style="margin:0 0 12px; font-size:24px;">🚀 Quick Scraper Tool</h3>
-      <p style="margin:8px 0">Drag this button to your bookmarks bar:</p>
+      <h3 class="stencil" style="margin:0 0 12px; font-size:24px;">🚀 Scraper Tools</h3>
+      <p style="margin:8px 0">Drag these buttons to your bookmarks bar to start scraping motorcycle listings!</p>
       
-      <div style="text-align:center; margin:20px 0">
-        <a href="javascript:(function(){try{if(window.location.hostname.includes('facebook.com')){alert('⚠️ Facebook blocks direct scraping.\n\nPlease:\n1. Copy the listing details manually\n2. Go to your TrueSpeed admin\n3. Paste into the form\n\nThis works on CycleTrader, Craigslist, eBay, etc.');return;}const getTitle=()=>{const selectors=['h1','.listing-title','.vehicle-title','[data-testid*=title]','.item-title','.product-title','meta[property=\'og:title\']','[class*=title]:not(.price-title)'];for(let sel of selectors){const el=document.querySelector(sel);if(el){const content=el.content||el.innerText||el.textContent;if(content&&content.trim().length>5)return content.trim();}}return document.title||'Untitled Listing';};const getPrice=()=>{const selectors=['.price','[class*=price]','[data-testid*=price]','.asking-price','.vehicle-price','meta[property=\'product:price:amount\']','[itemprop=price]'];for(let sel of selectors){const el=document.querySelector(sel);if(el){const content=el.content||el.innerText||el.textContent||el.getAttribute('content');const price=content?content.replace(/[^0-9]/g,''):'';if(price&&price.length>0)return price;}}return'0';};const getImage=()=>{const selectors=['.main-image img','.gallery img','[class*=gallery] img','[class*=image] img','[data-testid*=image] img','meta[property=\'og:image\']','img[src*=vehicle]','img[src*=cycle]','img[src*=motorcycle]','.photos img','.slider img','figure img','picture img'];for(let sel of selectors){const el=document.querySelector(sel);if(el){const src=el.content||el.src||el.getAttribute('content');if(src&&src.startsWith('http'))return src;}}const allImages=Array.from(document.querySelectorAll('img'));const bigImage=allImages.filter(img=>img.width>200&&img.src&&img.src.startsWith('http')).sort((a,b)=>(b.width*b.height)-(a.width*a.height))[0];return bigImage?bigImage.src:'';};const getDescription=()=>{const selectors=['.description','.details','[class*=description]','[data-testid*=description]','.listing-details','.vehicle-details','.item-description','meta[property=\'og:description\']','[itemprop=description]'];for(let sel of selectors){const el=document.querySelector(sel);if(el){const content=el.content||el.innerText||el.textContent||el.getAttribute('content');if(content&&content.trim().length>10)return content.trim().slice(0,200);}}return'No description available';};const data={title:getTitle(),price:getPrice(),image:getImage(),description:getDescription(),source:window.location.hostname};if(!data.title||data.title==='Untitled Listing'){if(!confirm('⚠️ Could not find listing details on this page.\n\nThis works best on:\n• CycleTrader\n• Craigslist\n• eBay Motors\n• AutoTrader\n\nSend empty data to admin?')){return;}}if(window.opener&&window.opener.__truespeedReceiveData){window.opener.__truespeedReceiveData(data);alert('✅ Data sent to TrueSpeed Admin!');return;}const adminUrl=prompt('📋 Data scraped! Enter your admin URL:\n\n(Leave blank for local development)','http://localhost:8080/admin.html')||'http://localhost:8080/admin.html';if(adminUrl){const fullUrl=adminUrl+'#scraped='+encodeURIComponent(JSON.stringify(data));window.open(fullUrl,'truespeed_admin');}}catch(err){alert('❌ Scraping failed on this site.\n\nError: '+err.message+'\n\nTry on CycleTrader, Craigslist, or eBay Motors instead.');console.error('TrueSpeed Scraper Error:',err);}})();" 
-           class="bookmarklet-btn">
-          🏍️ Scrape to TrueSpeed
-        </a>
+      <!-- Individual Scraper -->
+      <div style="background: var(--bg); border-radius: 12px; padding: 16px; margin: 16px 0; border: 1px solid var(--stroke);">
+        <h4 style="color: var(--brand); margin: 0 0 8px;">🏍️ Individual Motorcycle Scraper</h4>
+        <p class="hint" style="margin: 0 0 12px;">Use on individual motorcycle listing pages (Craigslist, eBay, CycleTrader, etc.)</p>
+        
+        <div style="text-align: center; margin: 16px 0;">
+          <a href="javascript:(function(){try{const getTitle=()=>{const selectors=['h1','.listing-title','.postingtitle','[class*=&quot;title&quot;]:not([class*=&quot;price&quot;])','.atl','meta[property=&quot;og:title&quot;]'];for(let sel of selectors){const el=document.querySelector(sel);if(el){const text=el.content||el.innerText||el.textContent;if(text&&text.trim().length>3)return text.trim();}}return document.title.split('-')[0].split('|')[0].trim()||'Motorcycle Listing';};const getPrice=()=>{const selectors=['.price','.result-price','[class*=&quot;price&quot;]:not([class*=&quot;title&quot;])','.asking-price'];for(let sel of selectors){const el=document.querySelector(sel);if(el){const text=el.innerText||el.textContent||el.content||'';const price=text.replace(/[^0-9]/g,'');if(price)return price;}}const bodyText=document.body.innerText;const priceMatch=bodyText.match(/\$[\d,]+/);return priceMatch?priceMatch[0].replace(/[^0-9]/g,''):'0';};const getImage=()=>{const selectors=['meta[property=&quot;og:image&quot;]','.gallery img','.slide img','[class*=&quot;gallery&quot;] img','#thumbs img','picture img','.cyc-image img'];for(let sel of selectors){const el=document.querySelector(sel);if(el){const src=el.content||el.src;if(src&&src.startsWith('http'))return src;}}const allImgs=Array.from(document.querySelectorAll('img'));const bigImg=allImgs.filter(i=>i.width>200&&i.src&&i.src.startsWith('http')&&!i.src.includes('logo')).sort((a,b)=>(b.width*b.height)-(a.width*a.height))[0];return bigImg?bigImg.src:'';};const getDesc=()=>{const selectors=['.postingbody','#postingbody','.description','[class*=&quot;description&quot;]:not([class*=&quot;title&quot;])','.details','.atl'];for(let sel of selectors){const el=document.querySelector(sel);if(el){const text=el.innerText||el.textContent||'';if(text.length>20)return text.substring(0,200).trim();}}return'See full listing for details';};const data={title:getTitle(),price:getPrice(),image:getImage(),description:getDesc(),source:window.location.hostname};console.log('Scraped:',data);const adminUrl='https://robertallison.github.io/TrueSpeed/admin.html';const confirmMsg='Found:\n✓ '+data.title+'\n✓ $'+parseInt(data.price||0).toLocaleString()+'\n✓ Image: '+(data.image?'Yes':'No')+'\n\nSend to TrueSpeed admin?';if(confirm(confirmMsg)){window.open(adminUrl+'#scraped='+encodeURIComponent(JSON.stringify(data)),'truespeed_admin');setTimeout(()=>{alert('✅ Data sent! Check your admin tab.');},500);}}catch(err){alert('Error: '+err.message);console.error(err);}})();" 
+             class="bookmarklet-btn" 
+             onclick="alert('Don\'t click! Drag this button to your bookmarks bar instead.'); return false;">
+          🏍️ Add Single Motorcycle
+          </a>
+        </div>
+        
+        <div class="steps" style="font-size: 13px;">
+          <div class="step" style="display: flex; align-items: center; margin: 8px 0;">
+            <span class="step-num" style="background: var(--brand); color: #0f1115; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; margin-right: 10px;">1</span>
+            <div>Go to any motorcycle listing page</div>
+          </div>
+          <div class="step" style="display: flex; align-items: center; margin: 8px 0;">
+            <span class="step-num" style="background: var(--brand); color: #0f1115; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; margin-right: 10px;">2</span>
+            <div>Click the bookmark while viewing the motorcycle</div>
+          </div>
+          <div class="step" style="display: flex; align-items: center; margin: 8px 0;">
+            <span class="step-num" style="background: var(--brand); color: #0f1115; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; margin-right: 10px;">3</span>
+            <div>Confirm to add it to your inventory</div>
+          </div>
+        </div>
       </div>
       
-      <div class="steps">
-        <div class="step">
-          <span class="step-num">1</span>
-          <div>
-            <strong>Drag the button above</strong> to your browser's bookmarks bar
-            <span class="hint" style="display:block;margin-top:4px">If you can't see the bookmarks bar, press Ctrl+Shift+B (Cmd+Shift+B on Mac)</span>
-          </div>
+      <!-- Bulk Scraper -->
+      <div style="background: var(--bg); border-radius: 12px; padding: 16px; margin: 16px 0; border: 1px solid var(--stroke);">
+        <h4 style="color: var(--brand-2); margin: 0 0 8px;">📋 Bulk Scraper</h4>
+        <p class="hint" style="margin: 0 0 12px;">Use on search/listing pages to grab multiple motorcycles at once</p>
+        
+        <div style="text-align: center; margin: 16px 0;">
+          <a href="javascript:(function(){const items=[];const h=location.hostname;if(h.includes('craigslist')){document.querySelectorAll('.result-row').forEach((c,i)=>{const title=c.querySelector('.result-title')?.textContent?.trim();const price=(c.querySelector('.result-price')?.textContent||'0').replace(/[^0-9]/g,'');if(title){items.push({id:'p_'+Date.now()+'_'+i,title:title.substring(0,100),price:parseInt(price)||0,image:'',description:'From Craigslist',category:'Motorcycles',featured:false});}});}else if(h.includes('ebay')){document.querySelectorAll('.s-item').forEach((c,i)=>{const title=c.querySelector('.s-item__title')?.textContent?.trim();if(title&&!title.includes('RESULTS')){const price=(c.querySelector('.s-item__price')?.textContent||'0').replace(/[^0-9]/g,'');const img=c.querySelector('.s-item__image img')?.src||'';items.push({id:'p_'+Date.now()+'_'+i,title:title.substring(0,100),price:parseInt(price)||0,image:img,description:'From eBay',category:'Motorcycles',featured:false});}});}else if(h.includes('cycletrader')){document.querySelectorAll('[class*=&quot;listing&quot;]').forEach((c,i)=>{const title=c.querySelector('[class*=&quot;title&quot;]')?.textContent?.trim();const price=(c.querySelector('[class*=&quot;price&quot;]')?.textContent||'0').replace(/[^0-9]/g,'');if(title){items.push({id:'p_'+Date.now()+'_'+i,title:title.substring(0,100),price:parseInt(price)||0,image:'',description:'From CycleTrader',category:'Motorcycles',featured:false});}});}else if(h.includes('liqui-moly')){document.querySelectorAll('.item,[class*=&quot;product&quot;]').forEach((c,i)=>{const name=c.querySelector('[class*=&quot;name&quot;]')?.textContent?.trim();if(name&&name.match(/\d+W-\d+|Top Tec|Oil|Motor/i)){const img=c.querySelector('img')?.src||'';items.push({id:'p_'+Date.now()+'_'+i,title:name.substring(0,100),price:0,image:img,description:'Liqui Moly product',category:'Parts',featured:false});}});}else{alert('This bulk scraper works on:\n• Craigslist\n• eBay Motors\n• CycleTrader\n• Liqui-Moly\n\nFor other sites, use the individual scraper.');return;}if(!items.length){alert('No items found. Make sure you are on a search results page with multiple listings.');return;}if(confirm('Found '+items.length+' items!\n\n'+items.slice(0,3).map(i=>'• '+i.title.substring(0,40)).join('\n')+(items.length>3?'\n... and '+(items.length-3)+' more':'')+'\n\nImport all?')){const data=btoa(encodeURIComponent(JSON.stringify(items)));window.open('https://robertallison.github.io/TrueSpeed/admin.html#bulk='+data,'truespeed_admin');alert('✅ Check your admin tab!');}})();" 
+             class="bookmarklet-btn" 
+             style="background: linear-gradient(135deg, #8b5cf6, #ec4899);"
+             onclick="alert('Don\'t click! Drag this button to your bookmarks bar instead.'); return false;">
+          📋 Bulk Import Motorcycles
+          </a>
         </div>
-        <div class="step">
-          <span class="step-num">2</span>
-          <div>
-            <strong>Visit any motorcycle listing</strong> on CycleTrader, Craigslist, eBay Motors, etc.
-            <span class="hint" style="display:block;margin-top:4px">Note: Facebook Marketplace blocks bookmarklets for security</span>
+        
+        <div class="steps" style="font-size: 13px;">
+          <div class="step" style="display: flex; align-items: center; margin: 8px 0;">
+            <span class="step-num" style="background: var(--brand-2); color: #0f1115; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; margin-right: 10px;">1</span>
+            <div>Go to a search results page (Craigslist, eBay, etc.)</div>
           </div>
-        </div>
-        <div class="step">
-          <span class="step-num">3</span>
-          <div>
-            <strong>Click the bookmark</strong> while on the listing page - data auto-fills below!
+          <div class="step" style="display: flex; align-items: center; margin: 8px 0;">
+            <span class="step-num" style="background: var(--brand-2); color: #0f1115; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; margin-right: 10px;">2</span>
+            <div>Click the bookmark to grab all visible motorcycles</div>
+          </div>
+          <div class="step" style="display: flex; align-items: center; margin: 8px 0;">
+            <span class="step-num" style="background: var(--brand-2); color: #0f1115; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; margin-right: 10px;">3</span>
+            <div>Import all at once to your inventory</div>
           </div>
         </div>
       </div>
       
-      <p class="hint" style="margin-top:12px">
-        💡 <strong>Pro tip:</strong> Keep this admin tab open while scraping for instant import
-      </p>
+      <!-- Supported Sites -->
+      <div style="margin-top: 16px; padding: 12px; background: var(--bg); border-radius: 8px; border: 1px solid var(--stroke);">
+        <p class="hint" style="margin: 0;"><strong>✅ Supported Sites:</strong> Craigslist, eBay Motors, CycleTrader, Facebook Marketplace (manual), AutoTrader, Liqui-Moly, and most motorcycle dealer websites</p>
+      </div>
+      
+      <!-- First Time Setup Note -->
+      <div style="margin-top: 8px; padding: 12px; background: linear-gradient(135deg, rgba(251, 191, 36, 0.1), rgba(251, 146, 60, 0.1)); border-radius: 8px; border: 1px solid rgba(251, 191, 36, 0.3);">
+        <p class="hint" style="margin: 0;">
+          <strong>⚠️ First Time Setup:</strong> Make sure your bookmarks bar is visible (Ctrl+Shift+B on PC, Cmd+Shift+B on Mac), then drag the buttons above to your bookmarks bar. They'll stay there for easy access!
+        </p>
+      </div>
     </section>
 
     <!-- PRODUCT FORM -->
@@ -104,6 +141,34 @@
   </main>
 
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <style>
+    /* Bookmarklet button styles */
+    .bookmarklet-btn {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--brand), var(--brand-2));
+      color: #0f1115;
+      padding: 14px 24px;
+      border-radius: 999px;
+      font-weight: 700;
+      text-decoration: none;
+      font-size: 18px;
+      box-shadow: 0 10px 30px rgba(110, 231, 183, 0.3);
+      transition: all 0.3s ease;
+      cursor: move;
+      user-select: none;
+      border: 2px solid transparent;
+    }
+    
+    .bookmarklet-btn:hover {
+      transform: translateY(-2px) scale(1.05);
+      box-shadow: 0 15px 40px rgba(110, 231, 183, 0.4);
+    }
+    
+    .bookmarklet-btn:active {
+      transform: scale(0.98);
+    }
+  </style>
 
   <script src="shared.js?v=1"></script>
   <script src="admin.js?v=10"></script>
