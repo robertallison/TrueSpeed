@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TrueSpeed Scraper Test</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      max-width: 800px;
+      margin: 50px auto;
+      padding: 20px;
+      background: #0b0c10;
+      color: #e8e8ea;
+    }
+    
+    .section {
+      background: #111217;
+      border: 1px solid #1c1e26;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    
+    h1 { color: #6ee7b7; }
+    h2 { color: #60a5fa; margin-top: 0; }
+    
+    .button {
+      display: inline-block;
+      background: linear-gradient(135deg, #fbbf24, #fb923c);
+      color: #0f1115;
+      padding: 12px 24px;
+      border-radius: 999px;
+      font-weight: bold;
+      text-decoration: none;
+      margin: 10px 5px;
+      cursor: pointer;
+      border: none;
+      font-size: 16px;
+    }
+    
+    .button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(251, 191, 36, 0.4);
+    }
+    
+    .success {
+      background: linear-gradient(135deg, #6ee7b7, #60a5fa);
+    }
+    
+    .log {
+      background: #000;
+      border: 1px solid #333;
+      border-radius: 8px;
+      padding: 15px;
+      margin-top: 10px;
+      font-family: monospace;
+      font-size: 12px;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+    
+    .log-entry {
+      margin: 5px 0;
+      padding: 5px;
+      border-left: 3px solid #666;
+    }
+    
+    .log-success { border-left-color: #6ee7b7; color: #6ee7b7; }
+    .log-error { border-left-color: #ef4444; color: #ef4444; }
+    .log-info { border-left-color: #60a5fa; color: #60a5fa; }
+    
+    code {
+      background: #1c1e26;
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #fbbf24;
+    }
+  </style>
+</head>
+<body>
+  <h1>🔧 TrueSpeed Scraper Test Page</h1>
+  
+  <!-- Test 1: Direct Function Call -->
+  <div class="section">
+    <h2>Test 1: Direct Function Call</h2>
+    <p>Click to test if the receiver function works:</p>
+    <button class="button success" onclick="testDirectCall()">
+      Test Direct Call
+    </button>
+    <div id="log1" class="log"></div>
+  </div>
+  
+  <!-- Test 2: Window Opener -->
+  <div class="section">
+    <h2>Test 2: Window Opener Method</h2>
+    <p>Open admin in new window and test communication:</p>
+    <button class="button" onclick="testWindowOpener()">
+      Open Admin & Test
+    </button>
+    <div id="log2" class="log"></div>
+  </div>
+  
+  <!-- Test 3: Hash Method -->
+  <div class="section">
+    <h2>Test 3: URL Hash Method</h2>
+    <p>Test sending data via URL hash:</p>
+    <button class="button" onclick="testHashMethod()">
+      Test Hash Method
+    </button>
+    <div id="log3" class="log"></div>
+  </div>
+  
+  <!-- Test 4: Manual Bookmarklet -->
+  <div class="section">
+    <h2>Test 4: Bookmarklet on This Page</h2>
+    <p>Drag this test bookmarklet to your bookmarks and click it on this page:</p>
+    <a href="javascript:(function(){alert('Bookmarklet works! Now testing scraping...');const data={title:document.querySelector('h1').innerText,price:'9999',image:'https://picsum.photos/400/300',description:'Test description from bookmarklet',source:window.location.hostname};console.log('Scraped:',data);if(window.opener&&window.opener.__truespeedReceiveData){window.opener.__truespeedReceiveData(data);alert('✅ Data sent!');}else{const url=prompt('Enter admin URL:','http://localhost:8080/admin.html')||'http://localhost:8080/admin.html';window.open(url+'#scraped='+encodeURIComponent(JSON.stringify(data)),'_blank');alert('📋 Opening admin with data...');}})();" 
+       class="button" style="background: linear-gradient(135deg, #a855f7, #ec4899);">
+      🧪 Test Bookmarklet
+    </a>
+    <div id="log4" class="log"></div>
+  </div>
+  
+  <!-- Sample Data for Real Test -->
+  <div class="section">
+    <h2>Sample Motorcycle Data (Hidden)</h2>
+    <div style="display:none;">
+      <h1 class="listing-title">2019 Harley-Davidson Street Glide Special</h1>
+      <span class="price">$18,500</span>
+      <img class="main-image" src="https://picsum.photos/seed/harley/800/600" alt="Harley">
+      <div class="description">
+        Excellent condition Street Glide Special with only 8,500 miles. 
+        Features include Stage 2 performance upgrade, custom exhaust, 
+        LED lighting throughout, and recently serviced.
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    // Logging helper
+    function log(logId, message, type = 'info') {
+      const logDiv = document.getElementById(logId);
+      const entry = document.createElement('div');
+      entry.className = `log-entry log-${type}`;
+      const time = new Date().toLocaleTimeString();
+      entry.innerHTML = `[${time}] ${message}`;
+      logDiv.appendChild(entry);
+      logDiv.scrollTop = logDiv.scrollHeight;
+    }
+    
+    // Test 1: Direct call
+    function testDirectCall() {
+      log('log1', 'Starting direct call test...', 'info');
+      
+      const testData = {
+        title: "Test Motorcycle Direct",
+        price: "12500",
+        image: "https://picsum.photos/seed/test1/600/400",
+        description: "This is a test from direct function call",
+        source: "test-page"
+      };
+      
+      log('log1', `Data to send: <code>${JSON.stringify(testData, null, 2)}</code>`, 'info');
+      
+      // Check if function exists
+      if (typeof window.__truespeedReceiveData === 'function') {
+        try {
+          window.__truespeedReceiveData(testData);
+          log('log1', '✅ Function called successfully!', 'success');
+          log('log1', 'Check your admin panel - data should be there', 'success');
+        } catch(e) {
+          log('log1', `❌ Error calling function: ${e.message}`, 'error');
+        }
+      } else {
+        log('log1', '❌ Function __truespeedReceiveData not found on this window', 'error');
+        log('log1', 'This is normal - the function should be on the admin page, not here', 'info');
+      }
+    }
+    
+    // Test 2: Window opener
+    let adminWindow = null;
+    function testWindowOpener() {
+      log('log2', 'Opening admin window...', 'info');
+      
+      const adminUrl = prompt('Enter your admin URL:', 'http://localhost:8080/admin.html');
+      if (!adminUrl) {
+        log('log2', 'Cancelled', 'error');
+        return;
+      }
+      
+      adminWindow = window.open(adminUrl, 'truespeed_admin', 'width=1200,height=800');
+      log('log2', 'Admin window opened, waiting 2 seconds for it to load...', 'info');
+      
+      setTimeout(() => {
+        const testData = {
+          title: "Test Motorcycle Window",
+          price: "15000",
+          image: "https://picsum.photos/seed/test2/600/400",
+          description: "This is a test from window opener method",
+          source: "test-page-window"
+        };
+        
+        log('log2', `Attempting to send: <code>${JSON.stringify(testData, null, 2)}</code>`, 'info');
+        
+        if (adminWindow && !adminWindow.closed) {
+          if (typeof adminWindow.__truespeedReceiveData === 'function') {
+            try {
+              adminWindow.__truespeedReceiveData(testData);
+              log('log2', '✅ Data sent successfully via window.opener!', 'success');
+            } catch(e) {
+              log('log2', `❌ Error: ${e.message}`, 'error');
+            }
+          } else {
+            log('log2', '⚠️ Function not found in admin window - it might still be loading', 'error');
+            log('log2', 'Try waiting a few more seconds and test again', 'info');
+          }
+        } else {
+          log('log2', '❌ Admin window is closed or blocked', 'error');
+        }
+      }, 2000);
+    }
+    
+    // Test 3: Hash method
+    function testHashMethod() {
+      log('log3', 'Testing hash method...', 'info');
+      
+      const testData = {
+        title: "Test Motorcycle Hash",
+        price: "8900",
+        image: "https://picsum.photos/seed/test3/600/400",
+        description: "This is a test from URL hash method",
+        source: "test-page-hash"
+      };
+      
+      log('log3', `Data to send: <code>${JSON.stringify(testData, null, 2)}</code>`, 'info');
+      
+      const adminUrl = prompt('Enter your admin URL:', 'http://localhost:8080/admin.html');
+      if (!adminUrl) {
+        log('log3', 'Cancelled', 'error');
+        return;
+      }
+      
+      const fullUrl = adminUrl + '#scraped=' + encodeURIComponent(JSON.stringify(testData));
+      log('log3', `Opening URL: <code>${fullUrl.substring(0, 100)}...</code>`, 'info');
+      
+      window.open(fullUrl, '_blank');
+      log('log3', '✅ Admin opened with data in URL hash', 'success');
+      log('log3', 'The admin page should automatically detect and process the data', 'info');
+    }
+    
+    // Check if we're in an admin context
+    window.addEventListener('load', () => {
+      const isAdmin = window.location.pathname.includes('admin');
+      if (isAdmin) {
+        console.log('🎯 This appears to be an admin page');
+      } else {
+        console.log('📝 Test page loaded - not an admin page');
+      }
+      
+      // Log current environment
+      console.log('Environment check:', {
+        hasReceiveFunction: typeof window.__truespeedReceiveData === 'function',
+        pathname: window.location.pathname,
+        isLocalhost: window.location.hostname === 'localhost',
+        windowOpener: !!window.opener
+      });
+    });
+  </script>
+</body>
+</html>

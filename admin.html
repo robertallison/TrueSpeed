@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin – TrueSpeedAutosports</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css?v=8" />
+</head>
+<body class="theme-garage">
+  <header class="site-header">
+    <div class="container header-inner">
+      <h1 class="brand">
+        <span class="brand-top">TrueSpeed</span>
+        <span class="brand-bottom">AutoSports</span>
+      </h1>
+      <nav class="nav">
+        <a href="index.html" class="nav-link">← Back to Shop</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container" style="padding:26px 0 60px">
+    <h2 class="stencil" style="font-size:32px; margin:0 0 10px;">Admin Dashboard</h2>
+    <p class="hint" style="margin-top:0">Scrape listings or add manually. Export/Import to back up.</p>
+
+    <!-- SCRAPER SECTION -->
+    <section class="scraper-section" style="margin-top:20px; border:1px solid var(--stroke); border-radius:12px; padding:16px; background:linear-gradient(180deg,var(--card),var(--card-2)); box-shadow: var(--shadow)">
+      <h3 class="stencil" style="margin:0 0 12px; font-size:24px;">🚀 Quick Scraper Tool</h3>
+      <p style="margin:8px 0">Drag this button to your bookmarks bar:</p>
+      
+      <div style="text-align:center; margin:20px 0">
+        <a href="javascript:(function(){try{if(window.location.hostname.includes('facebook.com')){alert('⚠️ Facebook blocks direct scraping.\n\nPlease:\n1. Copy the listing details manually\n2. Go to your TrueSpeed admin\n3. Paste into the form\n\nThis works on CycleTrader, Craigslist, eBay, etc.');return;}const getTitle=()=>{const selectors=['h1','.listing-title','.vehicle-title','[data-testid*=title]','.item-title','.product-title','meta[property=\'og:title\']','[class*=title]:not(.price-title)'];for(let sel of selectors){const el=document.querySelector(sel);if(el){const content=el.content||el.innerText||el.textContent;if(content&&content.trim().length>5)return content.trim();}}return document.title||'Untitled Listing';};const getPrice=()=>{const selectors=['.price','[class*=price]','[data-testid*=price]','.asking-price','.vehicle-price','meta[property=\'product:price:amount\']','[itemprop=price]'];for(let sel of selectors){const el=document.querySelector(sel);if(el){const content=el.content||el.innerText||el.textContent||el.getAttribute('content');const price=content?content.replace(/[^0-9]/g,''):'';if(price&&price.length>0)return price;}}return'0';};const getImage=()=>{const selectors=['.main-image img','.gallery img','[class*=gallery] img','[class*=image] img','[data-testid*=image] img','meta[property=\'og:image\']','img[src*=vehicle]','img[src*=cycle]','img[src*=motorcycle]','.photos img','.slider img','figure img','picture img'];for(let sel of selectors){const el=document.querySelector(sel);if(el){const src=el.content||el.src||el.getAttribute('content');if(src&&src.startsWith('http'))return src;}}const allImages=Array.from(document.querySelectorAll('img'));const bigImage=allImages.filter(img=>img.width>200&&img.src&&img.src.startsWith('http')).sort((a,b)=>(b.width*b.height)-(a.width*a.height))[0];return bigImage?bigImage.src:'';};const getDescription=()=>{const selectors=['.description','.details','[class*=description]','[data-testid*=description]','.listing-details','.vehicle-details','.item-description','meta[property=\'og:description\']','[itemprop=description]'];for(let sel of selectors){const el=document.querySelector(sel);if(el){const content=el.content||el.innerText||el.textContent||el.getAttribute('content');if(content&&content.trim().length>10)return content.trim().slice(0,200);}}return'No description available';};const data={title:getTitle(),price:getPrice(),image:getImage(),description:getDescription(),source:window.location.hostname};if(!data.title||data.title==='Untitled Listing'){if(!confirm('⚠️ Could not find listing details on this page.\n\nThis works best on:\n• CycleTrader\n• Craigslist\n• eBay Motors\n• AutoTrader\n\nSend empty data to admin?')){return;}}if(window.opener&&window.opener.__truespeedReceiveData){window.opener.__truespeedReceiveData(data);alert('✅ Data sent to TrueSpeed Admin!');return;}const adminUrl=prompt('📋 Data scraped! Enter your admin URL:\n\n(Leave blank for local development)','http://localhost:8080/admin.html')||'http://localhost:8080/admin.html';if(adminUrl){const fullUrl=adminUrl+'#scraped='+encodeURIComponent(JSON.stringify(data));window.open(fullUrl,'truespeed_admin');}}catch(err){alert('❌ Scraping failed on this site.\n\nError: '+err.message+'\n\nTry on CycleTrader, Craigslist, or eBay Motors instead.');console.error('TrueSpeed Scraper Error:',err);}})();" 
+           class="bookmarklet-btn">
+          🏍️ Scrape to TrueSpeed
+        </a>
+      </div>
+      
+      <div class="steps">
+        <div class="step">
+          <span class="step-num">1</span>
+          <div>
+            <strong>Drag the button above</strong> to your browser's bookmarks bar
+            <span class="hint" style="display:block;margin-top:4px">If you can't see the bookmarks bar, press Ctrl+Shift+B (Cmd+Shift+B on Mac)</span>
+          </div>
+        </div>
+        <div class="step">
+          <span class="step-num">2</span>
+          <div>
+            <strong>Visit any motorcycle listing</strong> on CycleTrader, Craigslist, eBay Motors, etc.
+            <span class="hint" style="display:block;margin-top:4px">Note: Facebook Marketplace blocks bookmarklets for security</span>
+          </div>
+        </div>
+        <div class="step">
+          <span class="step-num">3</span>
+          <div>
+            <strong>Click the bookmark</strong> while on the listing page - data auto-fills below!
+          </div>
+        </div>
+      </div>
+      
+      <p class="hint" style="margin-top:12px">
+        💡 <strong>Pro tip:</strong> Keep this admin tab open while scraping for instant import
+      </p>
+    </section>
+
+    <!-- PRODUCT FORM -->
+    <section style="margin-top:20px; border:1px solid var(--stroke); border-radius:12px; padding:16px; background:linear-gradient(180deg,var(--card),var(--card-2)); box-shadow: var(--shadow)">
+      <h3 class="stencil" style="margin:0 0 12px; font-size:24px;">Add / Edit Product</h3>
+      <form id="productForm" class="form-grid" style="grid-template-columns:1fr 1fr; gap:12px">
+        <label><span>Title</span><input type="text" id="title" required /></label>
+        <label><span>Category</span><input type="text" id="category" placeholder="Motorcycles, Parts, etc." required /></label>
+        <label><span>Price (USD)</span><input type="number" id="price" min="0" step="1" required /></label>
+        <label>
+          <span>Featured</span>
+          <select id="featured"><option value="false">No</option><option value="true">Yes</option></select>
+        </label>
+        <label style="grid-column:1/-1;"><span>Image URL</span><input type="url" id="image" placeholder="https://..." required /></label>
+        <label style="grid-column:1/-1;"><span>Description</span><textarea id="description" rows="3" required></textarea></label>
+        <input type="hidden" id="id" />
+        <div class="actions" style="grid-column:1/-1; justify-content:flex-start">
+          <button type="submit" class="btn cta-stripe">Save Product</button>
+          <button type="button" id="resetForm" class="btn ghost">Clear Form</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- PRODUCTS GRID -->
+    <section style="margin-top:24px;">
+      <div class="gallery-header" style="margin-bottom:10px">
+        <h3>All Products</h3>
+        <div>
+          <button id="seedDefaults" class="btn ghost">Reset to Defaults</button>
+          <button id="exportJson" class="btn ghost">Export JSON</button>
+          <input id="importFile" type="file" accept="application/json" style="display:none" />
+          <button id="importJsonBtn" class="btn ghost">Import JSON</button>
+        </div>
+      </div>
+      <div id="adminGrid" class="grid"></div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="shared.js?v=1"></script>
+  <script src="admin.js?v=10"></script>
+</body>
+</html>

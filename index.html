@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TrueSpeedAutosports</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="theme-garage">
+  <header class="site-header">
+    <div class="container header-inner">
+      <h1 class="brand">
+        <span class="brand-top">TrueSpeed</span>
+        <span class="brand-bottom">AutoSports</span>
+      </h1>
+      <nav class="nav">
+        <a href="#" class="nav-link is-active">Shop</a>
+        <a href="#about" class="nav-link">About</a>
+        <a href="#contact" class="nav-link">Contact</a>
+        <a href="admin.html" class="nav-link">Admin</a> <!-- Admin page link restored -->
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero hero-garage">
+      <div class="hero-overlay"></div>
+      <div class="container hero-inner">
+        <h2>Built. Tuned. Ready.</h2>
+        <p>Curated bikes and parts from our garage. Send a note if something grabs you—no checkout, just a conversation.</p>
+        <a href="#gallery" class="cta cta-stripe">Browse the floor</a>
+      </div>
+    </section>
+
+    <section id="gallery" class="container gallery-section">
+      <div class="gallery-header">
+        <h3>Motorcycle Collection</h3>
+        <div class="filters">
+          <input id="searchInput" type="search" placeholder="Search bikes & parts…" aria-label="Search items" />
+          <select id="categoryFilter" aria-label="Filter by category">
+            <option value="all">All Categories</option>
+          </select>
+          <select id="sortSelect" aria-label="Sort items">
+            <option value="featured">Featured</option>
+            <option value="price-asc">Price: Low to High</option>
+            <option value="price-desc">Price: High to Low</option>
+            <option value="alpha">A–Z</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="productGrid" class="grid"></div>
+    </section>
+
+    <section id="about" class="container about-section">
+      <h3>About Us</h3>
+      <p>We’re a small studio focused on timeless design. Every product is selected with care.</p>
+    </section>
+
+    <section id="contact" class="container contact-section">
+      <h3>Contact</h3>
+      <p>Questions? Email <a href="mailto:Tyler@truspeedautosport.com">Tyler@truspeedautosport.com</a>.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© <span id="year"></span> TruSpeedAutosports — All rights reserved.</p>
+      <a href="#" class="to-top" aria-label="Back to top">↑</a>
+    </div>
+  </footer>
+
+  <!-- Interest Modal -->
+  <dialog id="interestModal" class="modal">
+    <form id="interestForm" method="dialog" class="modal-card" novalidate>
+      <button type="button" class="modal-close" aria-label="Close" data-close>×</button>
+      <div class="modal-media">
+        <img id="modalImage" src="" alt="" />
+      </div>
+      <div class="modal-body">
+        <h4 id="modalTitle" class="stencil">I'm Interested</h4>
+        <p class="modal-sub" id="modalSubtitle"></p>
+
+        <div class="form-grid">
+          <label>
+            <span>Your name</span>
+            <input type="text" name="name" id="name" placeholder="Jane Doe" required />
+          </label>
+          <label>
+            <span>Your email</span>
+            <input type="email" name="email" id="email" placeholder="jane@example.com" required />
+          </label>
+        </div>
+
+        <label>
+          <span>Message (optional)</span>
+          <textarea name="message" id="message" rows="4" placeholder="Tell us what you’re after…"></textarea>
+        </label>
+
+        <input type="hidden" name="itemId" id="itemId" />
+        <input type="hidden" name="itemTitle" id="itemTitle" />
+        <input type="hidden" name="itemPrice" id="itemPrice" />
+
+        <div class="actions">
+          <button type="button" class="btn ghost" data-close>Cancel</button>
+          <button type="submit" class="btn cta-stripe">Send Interest</button>
+        </div>
+
+        <p class="hint">We’ll get your email. No purchase happens here.</p>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Toast -->
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+<script src="shared.js?v=1"></script>
+<script src="app.js?v=8"></script> 
+
+</body>
+</html>
