@@ -4,7 +4,7 @@
   window.__TRUESPEED_SHARED__ = true;
 
   // JSONBin Configuration
-  const JSONBIN_BIN_ID = '674e46c3e43b1c97be95cf9c8';
+  const JSONBIN_BIN_ID = '68e46c3e43b1c97be95cf9c8';
   const JSONBIN_API_KEY = '$2a$10$YpCLNe0DM5SESw4KuEc01..cqdPPoixm78gX0Qcf27xJ2WziqecwO';
   const JSONBIN_URL = `https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}`;
   
