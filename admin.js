@@ -437,3 +437,87 @@ window.addEventListener('hashchange', checkUrlImport);
 
 // Also check after a delay
 setTimeout(checkUrlImport, 1000);
+
+
+// This handles bulk import from bookmarklets via URL
+
+// URL-based import for bookmarklets
+function checkUrlImport() {
+  const hash = window.location.hash;
+  
+  // Check for single scraped item
+  if (hash.includes('#scraped=')) {
+    console.log('Found scraped data in URL');
+    try {
+      const jsonStr = decodeURIComponent(hash.replace('#scraped=', ''));
+      const data = JSON.parse(jsonStr);
+      
+      if (window.__truespeedReceiveData) {
+        window.__truespeedReceiveData(data);
+      }
+      
+      // Clear hash
+      history.replaceState(null, null, ' ');
+    } catch (e) {
+      console.error('Failed to parse scraped data:', e);
+    }
+  }
+  
+  // Check for bulk data in URL
+  if (hash.includes('#bulk=')) {
+    console.log('Found bulk data in URL');
+    try {
+      const compressed = hash.replace('#bulk=', '');
+      const data = JSON.parse(decodeURIComponent(atob(compressed)));
+      
+      if (data && data.length > 0) {
+        console.log(`Importing ${data.length} items from URL...`);
+        
+        const products = readProducts();
+        let added = 0;
+        
+        data.forEach(item => {
+          if (!products.some(p => p.title === item.title)) {
+            products.push(item);
+            added++;
+          }
+        });
+        
+        writeProducts(products);
+        renderAdminGrid();
+        
+        // Clear URL
+        history.replaceState(null, null, ' ');
+        
+        // Show success
+        if (typeof showToast === 'function') {
+          showToast(`✅ Imported ${added} items from bookmarklet!`);
+        }
+      }
+    } catch (e) {
+      console.error('Failed to import from URL:', e);
+    }
+  }
+}
+
+// Check on various events
+document.addEventListener('DOMContentLoaded', checkUrlImport);
+window.addEventListener('hashchange', checkUrlImport);
+window.addEventListener('focus', checkUrlImport);
+
+// Auto-refresh when cloud data changes
+window.__refreshProductsFromStore = function() {
+  console.log('Cloud data changed, refreshing...');
+  renderAdminGrid();
+};
+
+// Check for cloud updates periodically
+setInterval(() => {
+  if (window.Truespeed && window.Truespeed.readProductsFromCloud) {
+    window.Truespeed.readProductsFromCloud().then(() => {
+      renderAdminGrid();
+    });
+  }
+}, 30000); // Every 30 seconds
+
+console.log('✅ JSONBin cloud sync enabled');
